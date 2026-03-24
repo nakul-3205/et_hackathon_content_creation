@@ -1,0 +1,33 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model FlaggedPrompt {
+  id        String   @id @default(cuid()) // Auto-generated unique ID
+  userId    String   //  ClerkId
+  firstName String
+  lastName  String
+  email     String
+  prompt    String
+  banCount  Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model BannedUser {
+  id          String   @id @default(cuid())
+  userId      String   @unique           // The Clerk userId
+  firstName   String
+  lastName    String
+  email       String
+  bannedAt    DateTime @default(now())
+  bannedUntil DateTime
+  isPermanent Boolean  @default(false)
+  reason      String?
+}

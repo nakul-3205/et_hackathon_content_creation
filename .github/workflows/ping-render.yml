@@ -1,0 +1,17 @@
+# .github/workflows/ping-render.yml
+name: Ping Render Server
+
+on:
+  schedule:
+    # Runs every 14 minutes
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # optional: allows manual run
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render App
+        run: |
+          echo "Pinging https://flowa-ai-0mor.onrender.com/ ..."
+          curl -s -o /dev/null -w "%{http_code}\n" https://flowa-ai-0mor.onrender.com/
